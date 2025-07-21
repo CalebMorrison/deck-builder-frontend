@@ -739,6 +739,7 @@ const DeckBuilderPage = () => {
               <h4>Mana Curve</h4>
               {manaCurveData ? <Bar data={manaCurveData} /> : <p>No data</p>}
             </div>
+            {/* 
             <div style={{ marginBottom: "20px" }}>
               <h4>Color Breakdown</h4>
               {colorBreakdownData ? (
@@ -747,7 +748,7 @@ const DeckBuilderPage = () => {
                 <p>No data</p>
               )}
             </div>
-            {/* You can add more stats like card type breakdown */}
+            {/* You can add more stats like card type breakdown 
             <h4>Card Type Breakdown</h4>
             <ul>
               {Object.entries(deckStats.cardTypes || {}).map(
@@ -759,6 +760,7 @@ const DeckBuilderPage = () => {
                   )
               )}
             </ul>
+            */}
           </div>
         ) : (
           <p>Add cards to your deck to see statistics.</p>
