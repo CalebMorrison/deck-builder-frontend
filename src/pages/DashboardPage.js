@@ -44,7 +44,8 @@ const DashboardPage = () => {
   if (loading) {
     return (
       <div style={{ textAlign: "center", padding: "50px" }}>
-        Loading decks...
+        Loading decks... (If it is the first load in awhile the backend will be
+        spinning up)
       </div>
     );
   }
