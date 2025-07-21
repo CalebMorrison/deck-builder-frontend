@@ -70,3 +70,39 @@ button:hover {
 .alert-success {
   background-color: #28a745;
 }
+/* Styles for the loading screen */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f8f8f8; /* Light background */
+  color: #333;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #09f; /* A nice blue color for the spinner */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1.2s linear infinite; /* Animation */
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 0.9em;
+  color: #666;
+}
