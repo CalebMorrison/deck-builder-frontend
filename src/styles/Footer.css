@@ -1,0 +1,9 @@
+/* client/src/styles/Footer.css */
+.footer {
+  background-color: #282c34;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  margin-top: auto; /* Pushes footer to the bottom */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
