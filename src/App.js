@@ -23,31 +23,60 @@ function App() {
 
   useEffect(() => {
     const wakeUpBackend = async () => {
-      try {
-        setIsLoadingBackend(true); // Ensure loading state is true at the start of the ping
-        setBackendMessage("Waking up backend...");
+      setIsLoadingBackend(true);
+      setBackendMessage("Waking up backend...");
 
-        // Send a lightweight GET request to your backend's health endpoint
-        // Use a longer timeout (e.g., 30 seconds = 30000 ms) for this initial ping
-        await axios.get(`${API_URL}/health`, { timeout: 30000 });
+      let connectionRefused = false;
+
+      const tryPing = async () => {
+        try {
+          await axios.get(`${API_URL}/health`, { timeout: 30000 });
+          return true;
+        } catch (error) {
+          if (
+            error.code === "ECONNREFUSED" ||
+            error.message.includes("connect ECONNREFUSED")
+          ) {
+            console.warn("Connection refused. Backend likely asleep.");
+            connectionRefused = true;
+          } else {
+            console.error("Backend wake-up ping error:", error);
+          }
+          return false;
+        }
+      };
+
+      let success = await tryPing();
+
+      // Retry loop if initial ping fails due to connection refused
+      const maxRetries = 5;
+      let retries = 0;
+      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+      while (!success && retries < maxRetries) {
+        await delay(5000); // Wait 5 seconds before retrying
+        retries++;
+        success = await tryPing();
+      }
+
+      if (success) {
         setBackendMessage("Backend is awake!");
         console.log("Backend wake-up ping successful.");
-      } catch (error) {
+        if (connectionRefused) {
+          // Add the 50-second delay if we got a refusal first
+          await delay(50000);
+        }
+      } else {
         setBackendMessage(
           "Backend wake-up ping failed. It might still be starting or an error occurred."
         );
-        console.error("Backend wake-up ping error:", error);
-        // Important: Even if it fails, we still want to render the app
-        // because the server might just be slow, or the error isn't critical
-        // for basic frontend display. You can add more sophisticated error handling here.
-      } finally {
-        setIsLoadingBackend(false); // Once the ping attempt is made, stop loading
       }
+
+      setIsLoadingBackend(false);
     };
 
-    // Call the ping function on component mount
     wakeUpBackend();
-  }, []); // Empty dependency array means this runs only once on mount
+  }, []);
 
   // Conditional rendering: Show loading screen if backend is still waking up
   if (isLoadingBackend) {
