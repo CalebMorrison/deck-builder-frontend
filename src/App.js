@@ -54,7 +54,7 @@ function App() {
       const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
       while (!success && retries < maxRetries) {
-        await delay(5000); // Wait 5 seconds before retrying
+        await delay(10000); // Wait 10 seconds before retrying
         retries++;
         success = await tryPing();
       }
