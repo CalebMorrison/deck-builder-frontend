@@ -10,12 +10,10 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DeckBuilderPage from "./pages/DeckBuilderPage";
 import PrivateRoute from "./components/PrivateRoute";
-import "./styles/App.css"; // Your existing CSS
+import "./styles/App.css";
 
-// Ensure your API_URL correctly points to your Render backend base URL
-// Make sure you have REACT_APP_API_URL set in your .env file for Vercel deployment
-// e.g., REACT_APP_API_URL=https://your-render-app-name.onrender.com/api
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+const API_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000/api";
 
 function App() {
   const [isLoadingBackend, setIsLoadingBackend] = useState(true);
